@@ -9,7 +9,7 @@ on:
 
 jobs:
   train:                           # job name -> 'train'
-    runs-on: ubuntu-24.04          # type of machine (GitHub Runner) where this job will be executed
+    runs-on: self-hosted          # type of machine (GitHub Runner) where this job will be executed
     strategy:
       fail-fast: false
     steps:
@@ -30,7 +30,7 @@ jobs:
 
   test:                           # another job -> 'test'
     needs: train                  # run the 'test' job only after the 'train' job is done
-    runs-on: ubuntu-24.04         # type of machine (GitHub Runner) where this job will be executed
+    runs-on: self-hosted         # type of machine (GitHub Runner) where this job will be executed
     strategy:
       fail-fast: false
     steps:
@@ -50,7 +50,7 @@ jobs:
 
   build:                           # another job -> 'test'
     needs: [train, test]           # run the 'build' job only after the 'train' & 'test' job is done
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     strategy:
       fail-fast: false
     steps:
@@ -77,7 +77,7 @@ jobs:
 
   push-image:
     needs: [train, test, build]
-    runs-on: ubuntu-24.04
+    runs-on: self-hosted
     steps:
     - name: Repo Checkout
       uses: actions/checkout@v3
